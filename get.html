@@ -1,0 +1,30 @@
+<!--
+- Set up request handler
+- Request repos using GitHub API
+- Parse JSON response
+- Sort by date
+- Manipulate URLs
+- Create list of links to recent repos
+-->
+
+<script>
+onload = function() {
+
+	// Create a new AJAX request
+	var client = new XMLHttpRequest()
+
+	const body = document.getElementsByTagName("body")[0]
+
+	// Set up handler for AJAX response
+	client.onreadystatechange = function() {
+
+		// Check response is a good one
+		if (this.readyState === 4 && this.status === 200)
+			console.log(JSON.parse(client.responseText))
+	}
+
+	// Request the file
+	client.open("GET", "http://0.0.0.0:8000/message.json")
+	client.send()
+}
+</script>

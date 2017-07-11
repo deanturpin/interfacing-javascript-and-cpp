@@ -16,13 +16,15 @@
 				// Parse as JSON
 				const response = JSON.parse(client.responseText)
 
-				document.body.innerHTML = "<p>" + new Date() + "</p>"
-				document.body.innerHTML += "<p>"
+				var summary = "<p>" + new Date() + " - "
 
 				for (var i in response)
-					document.body.innerHTML += response[i] + " "
+					summary += response[i] + " "
 
-				document.body.innerHTML += "</p>"
+				summary += "</p>"
+
+				// Prepend summary to the top of the DOM
+				document.body.innerHTML = summary + document.body.innerHTML
 			}
 		}
 

@@ -4,8 +4,17 @@ int main() {
 
 	using namespace std;
 
-	cout << "Content-Type: text/html\n" << endl;
-	cout << "blah" << endl;
+	// HTTP header
+	cout << "Content-Type: text/text\n" << endl;
+
+	// The good stuff
+	cout <<
+		R"(
+			{
+				"firstName": "Dean",
+				"lastName": "Turpin"
+			}
+		)";
 
 	return 0;
 }

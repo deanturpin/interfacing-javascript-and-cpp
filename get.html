@@ -19,9 +19,7 @@ onload = function() {
 	// Peridically request an update
 	setInterval(function() {
 
-		console.log("get")
-
-		client.open("GET", "http://0.0.0.0:8000/mssage.json")
+		client.open("GET", "http://0.0.0.0:8000/cgi-bin/serve.cgi")
 		client.send()
 	}, 1000)
 }

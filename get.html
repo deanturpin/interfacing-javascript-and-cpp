@@ -1,13 +1,5 @@
-<!--
-- Set up request handler
-- Request repos using GitHub API
-- Parse JSON response
-- Sort by date
-- Manipulate URLs
-- Create list of links to recent repos
--->
+<script type="text/javascript">
 
-<script>
 onload = function() {
 
 	// Create a new AJAX request
@@ -23,8 +15,14 @@ onload = function() {
 			console.log(JSON.parse(client.responseText))
 	}
 
-	// Request the file
-	client.open("GET", "http://0.0.0.0:8000/message.json")
-	client.send()
+
+	// Peridically request an update
+	setInterval(function() {
+
+		console.log("get")
+
+		client.open("GET", "http://0.0.0.0:8000/mssage.json")
+		client.send()
+	}, 1000)
 }
 </script>

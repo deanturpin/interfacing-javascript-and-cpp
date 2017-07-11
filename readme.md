@@ -3,7 +3,7 @@ Compile the code
 clang++ -Weverything -std=c++1y -Wc++98-c++11-compat-pedantic -Wno-c++98-compat -o cgi-bin/serve.cgi serve.cpp
 ```
 
-Create python CGI server, needs to be from cgi-bin.
+Start python CGI server. It must be served from the cgi-bin folder.
 ```bash
 cd ..
 python -m CGIHTTPServer

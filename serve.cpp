@@ -6,18 +6,18 @@ int main() {
 
 	const string message =
 		R"(
-			{
-				"firstName": "Mr.",
-				"middleName": "Dean",
-				"lastName": "Turpin"
-			}
+{
+	"firstname": "Kenny",
+	"lastname": "Ken"
+}
 		)";
 
 	// HTTP header
-	cout << "Content-Type: text/text" << endl;
-	cout << "Content-Length: " << message.size() + 1 << endl;
-	cout << "Connection: Closed" << endl;
-	cout << "" << endl;
+	cout
+		<< "Content-Type: text/plain\n"
+		<< "Content-Length: " << message.size() + 1 + "\n"
+		<< "Connection: Closed\n"
+		<< "\n";
 
 	// The good stuff
 	cout << message << endl;

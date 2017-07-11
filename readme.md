@@ -8,3 +8,14 @@ Create python CGI server, needs to be called out of cgi-bin
 cd ..
 python -m CGIHTTPServer
 ```
+
+Test it
+```bash
+curl http://0.0.0.0:8000/cgi-bin/serve.cgi
+
+                        {
+													"firstName": "Mr.", 
+													"middleName": "Dean",
+													"lastName": "Turpin"
+												}
+```

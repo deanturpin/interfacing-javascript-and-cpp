@@ -16,6 +16,7 @@ int main() {
 	// HTTP header
 	cout << "Content-Type: text/text" << endl;
 	cout << "Content-Length: " << message.size() + 1 << endl;
+	cout << "Connection: Closed" << endl;
 	cout << "" << endl;
 
 	// The good stuff

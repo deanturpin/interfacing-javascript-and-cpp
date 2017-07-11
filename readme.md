@@ -3,7 +3,7 @@ Compile the code
 clang++ -Weverything -std=c++1y -Wc++98-c++11-compat-pedantic -Wno-c++98-compat -o cgi-bin/serve.cgi serve.cpp
 ```
 
-Create python CGI server, needs to be called out of cgi-bin
+Create python CGI server, needs to be from cgi-bin.
 ```bash
 cd ..
 python -m CGIHTTPServer
@@ -12,10 +12,6 @@ python -m CGIHTTPServer
 Test it
 ```bash
 curl http://0.0.0.0:8000/cgi-bin/serve.cgi
-
-                        {
-													"firstName": "Mr.", 
-													"middleName": "Dean",
-													"lastName": "Turpin"
-												}
 ```
+
+Or in the browser: http://0.0.0.0:8000/get.html

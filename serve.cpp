@@ -7,8 +7,25 @@ int main() {
 	const string message =
 		R"(
 {
-	"firstname": "Kenny",
-	"lastname": "Ken"
+	"type": "a",
+
+	"packets": [
+		{
+			"one": "1",
+			"two": "2",
+			"ten": "10"
+		},
+		{
+			"one": "10",
+			"two": "3",
+			"ten": "10"
+		},
+		{
+			"one": "5",
+			"two": "8",
+			"ten": "11"
+		}
+	]
 }
 		)";
 

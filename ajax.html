@@ -37,7 +37,6 @@
 
 		// Render a frame
 		var displayList = []
-		var fadeList = []
 		function render() {
 
 			context.fillStyle = "#fff"
@@ -46,7 +45,6 @@
 			// Process display list
 
 			const plotCount = displayList.length
-			console.log("plotting", plotCount)
 			
 			for (var i = 0; i < plotCount; ++i) {
 
@@ -73,17 +71,12 @@
 				// Parse as JSON
 				const json = JSON.parse(client.responseText)
 
-				console.log("json packets", json.packets.length)
-
-				for (var i = 0; i < json.packets.length; ++i) {
-
-					displayList[displayList.length] = [
+				// Create a bright plot
+				for (var i in json.packets)
+					displayList.push([
 							json.packets[i].one * Math.random() * width,
 							json.packets[i].two * Math.random() * height,
-							4]
-
-					console.log("\tadd", json.packets[i].one, json.packets[i].two)
-				}
+							20])
 
 				requestAnimationFrame(render)
 			}
@@ -94,6 +87,6 @@
 
 			client.open("GET", "cgi-bin/packet.json", true)
 			client.send()
-		}, 1000)
+		}, 100)
 	}
 </script>

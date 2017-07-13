@@ -17,27 +17,37 @@
 		const width = canvas.width = window.innerWidth * .95
 		const height = canvas.height = window.innerHeight * .92
 
-		context.fillStyle = "#f00"
+		// context.fillStyle = "#f00"
+		context.strokeStyle = "#f00"
 
 		// Circle wrapper
 		function circle(x, y, r) {
 
 			context.beginPath()
 
-			context.arc(
-				x,
-				y,
-				r,
-				0,
-				2 * Math.PI,
-				false)
+				context.arc(
+						x,
+						y,
+						r,
+						0,
+						2 * Math.PI,
+						false)
 
-			context.fill()
+				context.stroke()
+		}
+
+		var displayList = []
+		function render() {
+
+			// Process display list
+			var plot = displayList.shift()
+
+			if (plot)
+				circle(plot[0], plot[1], 4)
 		}
 
 		// Create a new AJAX request
 		var client = new XMLHttpRequest()
-		var frames = 0
 
 		// Set up handler for AJAX response
 		client.onreadystatechange = function() {
@@ -48,12 +58,18 @@
 				// Parse as JSON
 				const json = JSON.parse(client.responseText)
 
-				// console.log("draw frame", ++frames, "packets", json.packets.length)
-
-				for (var i in json.packets)
-					circle(
+				for (var i in json.packets) {
+					// circle(
+							// json.packets[i].one * Math.random() * width,
+							// json.packets[i].two * Math.random() * height, 1)
+			
+					displayList.push([
 							json.packets[i].one * Math.random() * width,
-							json.packets[i].two * Math.random() * height, 1)
+							json.packets[i].two * Math.random() * height,
+							4])
+
+					render()
+				}
 			}
 		}
 
@@ -62,6 +78,6 @@
 
 			client.open("GET", "cgi-bin/packet.json", true)
 			client.send()
-		}, 1000)
+		}, 3000)
 	}
 </script>

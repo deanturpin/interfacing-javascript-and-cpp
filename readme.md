@@ -1,6 +1,7 @@
 Compile the code
 ```bash
-clang++ -Weverything -std=c++1y -Wc++98-c++11-compat-pedantic -Wno-c++98-compat -o cgi-bin/serve.cgi serve.cpp
+clang++ -Weverything -std=c++1y -Wno-c++98-compat -o cgi-bin/packet.json
+serve.cpp
 ```
 
 Start python CGI server. It must be served from the cgi-bin folder.

@@ -4,6 +4,35 @@
 
 	onload = function() {
 
+		// Create a canvas element
+		const canvas = document.createElement("canvas")
+
+		// Add it to the DOM
+		document.body.appendChild(canvas)
+
+		// Define canvas (view port)
+		const context = canvas.getContext("2d")
+
+		// Set canvas size
+		const width = canvas.width = window.innerWidth * .95
+		const height = canvas.height = window.innerHeight * .92
+
+		// Circle wrapper
+		function circle(x, y, r) {
+
+			context.beginPath()
+
+			context.arc(
+				x,
+				y,
+				r,
+				0,
+				2 * Math.PI,
+				false)
+
+			context.fill()
+		}
+
 		// Create a new AJAX request
 		var client = new XMLHttpRequest()
 
@@ -16,20 +45,13 @@
 				// Parse as JSON
 				const response = JSON.parse(client.responseText)
 
-				var summary = "<p>" + response.type + "<br>"
-
 				for (var i in response.packets) {
 
-					for (var j in response.packets[i])
-						summary += j + ":" + response.packets[i][j] + " "
-				
-					summary += "<br>"
+					const x = response.packets[i].one * width
+					const y = response.packets[i].two * height
+
+					circle(x, y, 1)
 				}
-
-				summary += "</p>"
-
-				// Prepend summary to the top of the DOM
-				document.body.innerHTML = summary + document.body.innerHTML
 			}
 		}
 

@@ -14,25 +14,23 @@
 		const context = canvas.getContext("2d")
 
 		// Set canvas size
-		const width = canvas.width = window.innerWidth * .95
-		const height = canvas.height = window.innerHeight * .92
-
-		context.strokeStyle = "#f00"
+		const width = canvas.width = window.innerWidth * .98
+		const height = canvas.height = window.innerHeight * .97
 
 		// Circle wrapper
 		function circle(x, y, r) {
 
+			// Fade the stroke with decreasing radius
+			context.strokeStyle = "rgb("
+				+ 255 + ", "
+				+ Math.floor(255 - r*255/20) + ","
+				+ Math.floor(255 - r*255/20) + ""
+				+ ")"
+
+			// Draw the circle
 			context.beginPath()
-
-				context.arc(
-						x,
-						y,
-						r,
-						0,
-						2 * Math.PI,
-						false)
-
-				context.stroke()
+			context.arc( x, y, r, 0, 2 * Math.PI, false)
+			context.stroke()
 		}
 
 		// Render a frame
@@ -43,8 +41,7 @@
 			context.clearRect(0, 0, canvas.width, canvas.height)
 
 			// Process display list
-
-			const plotCount = displayList.length
+			const plotCount = Math.min(1000, displayList.length)
 			
 			for (var i = 0; i < plotCount; ++i) {
 
@@ -57,6 +54,8 @@
 				if (plot[2] > 0)
 					displayList.push([plot[0], plot[1], --plot[2]])
 			}
+
+			fetch()
 		}
 
 		// Create a new AJAX request
@@ -72,21 +71,25 @@
 				const json = JSON.parse(client.responseText)
 
 				// Create a bright plot
-				for (var i in json.packets)
+				for (var i = 0; i < Math.min(30, json.packets.length); ++i)
 					displayList.push([
 							json.packets[i].one * Math.random() * width,
-							json.packets[i].two * Math.random() * height,
+							json.packets[i].two * (.4 + .2 * Math.random()) * height,
 							20])
-
-				requestAnimationFrame(render)
 			}
 		}
 
-		// Peridically request an update
-		setInterval(function() {
+		// Request some more packets from the server
+		function fetch() {
 
 			client.open("GET", "cgi-bin/packet.json", true)
 			client.send()
-		}, 1000)
+		}
+
+		// Peridically update the screen
+		setInterval(requestAnimationFrame, 100, render)
+
+		// Let's get started
+		fetch()
 	}
 </script>

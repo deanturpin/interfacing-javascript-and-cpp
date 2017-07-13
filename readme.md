@@ -20,3 +20,6 @@ Or in the browser: http://0.0.0.0:8000/get.html
 - UI only knows how to parse JSON and correlate fields.
 - Interrogate external web APIs for extra info (news, wiki)
 
+# APIs
+- https://github.com/bcl/aisparser
+- 

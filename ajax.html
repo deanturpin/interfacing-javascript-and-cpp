@@ -17,7 +17,6 @@
 		const width = canvas.width = window.innerWidth * .95
 		const height = canvas.height = window.innerHeight * .92
 
-		// context.fillStyle = "#f00"
 		context.strokeStyle = "#f00"
 
 		// Circle wrapper
@@ -36,14 +35,30 @@
 				context.stroke()
 		}
 
+		// Render a frame
 		var displayList = []
+		var fadeList = []
 		function render() {
 
-			// Process display list
-			var plot = displayList.shift()
+			context.fillStyle = "#fff"
+			context.clearRect(0, 0, canvas.width, canvas.height)
 
-			if (plot)
-				circle(plot[0], plot[1], 4)
+			// Process display list
+
+			const plotCount = displayList.length
+			console.log("plotting", plotCount)
+			
+			for (var i = 0; i < plotCount; ++i) {
+
+				const plot = displayList.shift()
+
+				// Draw current plot
+				circle(plot[0], plot[1], plot[2])
+
+				// Push a smaller copy back on the display list
+				if (plot[2] > 0)
+					displayList.push([plot[0], plot[1], --plot[2]])
+			}
 		}
 
 		// Create a new AJAX request
@@ -58,18 +73,19 @@
 				// Parse as JSON
 				const json = JSON.parse(client.responseText)
 
-				for (var i in json.packets) {
-					// circle(
-							// json.packets[i].one * Math.random() * width,
-							// json.packets[i].two * Math.random() * height, 1)
-			
-					displayList.push([
+				console.log("json packets", json.packets.length)
+
+				for (var i = 0; i < json.packets.length; ++i) {
+
+					displayList[displayList.length] = [
 							json.packets[i].one * Math.random() * width,
 							json.packets[i].two * Math.random() * height,
-							4])
+							4]
 
-					render()
+					console.log("\tadd", json.packets[i].one, json.packets[i].two)
 				}
+
+				requestAnimationFrame(render)
 			}
 		}
 
@@ -78,6 +94,6 @@
 
 			client.open("GET", "cgi-bin/packet.json", true)
 			client.send()
-		}, 3000)
+		}, 1000)
 	}
 </script>

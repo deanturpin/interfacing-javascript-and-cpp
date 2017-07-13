@@ -4,6 +4,11 @@
 
 	onload = function() {
 
+		setInterval(function() {
+				if (window.location.href.split("?").pop() === "reload")
+							window.location.reload()
+		}, 4000)
+
 		// Create a canvas element
 		const canvas = document.createElement("canvas")
 
@@ -20,17 +25,21 @@
 		// Circle wrapper
 		function circle(x, y, r) {
 
-			// Fade the stroke with decreasing radius
-			context.strokeStyle = "rgb("
-				+ Math.floor(r*255/20) + ","
-				+ Math.floor(r*255/20) + ","
-				+ Math.floor(r*255/20) + ""
-				+ ")"
-
 			// Draw the circle
 			context.beginPath()
 			context.arc( x, y, r, 0, 2 * Math.PI, false)
 			context.stroke()
+		}
+
+		// Cartesian to polar conversion
+		function cartesianToPolar(x, y) {
+
+			const radius = height/6
+
+			const _x = (radius + 400 * y/height) * Math.sin(2 * Math.PI * x/width) + width/2
+			const _y = (radius + 400 * y/height) * Math.cos(2 * Math.PI * x/width) + height/2
+
+			return { X:_x, Y:_y}
 		}
 
 		// Render a frame
@@ -47,12 +56,14 @@
 
 				const plot = displayList.shift()
 
+				var polar = cartesianToPolar(plot[0], plot[1])
+
 				// Draw current plot
-				circle(plot[0], plot[1], plot[2])
+				circle(polar.X, polar.Y, plot[2])
 
 				// Push a smaller copy back on the display list
 				if (plot[2] > 0)
-					displayList.push([plot[0], plot[1], --plot[2]])
+					displayList.push([plot[0], plot[1], plot[2] - .25])
 			}
 
 			fetch()
@@ -71,11 +82,11 @@
 				const json = JSON.parse(client.responseText)
 
 				// Create a bright plot
-				for (var i = 0; i < Math.min(30, json.packets.length); ++i)
+				for (var i = 0; i < Math.min(100, json.packets.length); ++i)
 					displayList.push([
 							json.packets[i].one * Math.random() * width,
 							json.packets[i].two * (.4 + .2 * Math.random()) * height,
-							20])
+							5])
 			}
 		}
 

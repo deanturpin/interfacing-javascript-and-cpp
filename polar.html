@@ -93,7 +93,7 @@
 		// Request some more packets from the server
 		function fetch() {
 
-			client.open("GET", "cgi-bin/packet.json", true)
+			client.open("GET", "http://0.0.0.0:8000/cgi-bin/packet.json", true)
 			client.send()
 		}
 

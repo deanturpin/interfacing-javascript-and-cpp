@@ -41,7 +41,7 @@ int main() {
 	// HTTP header
 	cout
 		<< "Content-Type: text/plain\n"
-		<< "Content-Length: " << message.size() + 1 + "\n"
+		<< "Content-Length: " << to_string(message.size() + 1) + "\n"
 		<< "Connection: Closed\n"
 		<< "\n";
 

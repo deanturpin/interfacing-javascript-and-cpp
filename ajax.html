@@ -17,6 +17,8 @@
 		const width = canvas.width = window.innerWidth * .95
 		const height = canvas.height = window.innerHeight * .92
 
+		context.fillStyle = "#f00"
+
 		// Circle wrapper
 		function circle(x, y, r) {
 
@@ -35,30 +37,30 @@
 
 		// Create a new AJAX request
 		var client = new XMLHttpRequest()
+		var frames = 0
 
 		// Set up handler for AJAX response
 		client.onreadystatechange = function() {
 
-			// Check response is a good one
+			// Check the response is a good one
 			if (this.readyState === 4 && this.status === 200) {
 
 				// Parse as JSON
-				const response = JSON.parse(client.responseText)
+				const json = JSON.parse(client.responseText)
 
-				for (var i in response.packets) {
+				// console.log("draw frame", ++frames, "packets", json.packets.length)
 
-					const x = response.packets[i].one * width
-					const y = response.packets[i].two * height
-
-					circle(x, y, 1)
-				}
+				for (var i in json.packets)
+					circle(
+							json.packets[i].one * Math.random() * width,
+							json.packets[i].two * Math.random() * height, 1)
 			}
 		}
 
 		// Peridically request an update
 		setInterval(function() {
 
-			client.open("GET", "http://0.0.0.0:8000/cgi-bin/serve.cgi")
+			client.open("GET", "cgi-bin/packet.json", true)
 			client.send()
 		}, 1000)
 	}

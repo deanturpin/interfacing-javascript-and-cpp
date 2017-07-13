@@ -17,4 +17,6 @@ curl http://0.0.0.0:8000/cgi-bin/serve.cgi
 Or in the browser: http://0.0.0.0:8000/get.html
 
 # USP
-UI only knows how to parse JSON and correlate fields.
+- UI only knows how to parse JSON and correlate fields.
+- Interrogate external web APIs for extra info (news, wiki)
+

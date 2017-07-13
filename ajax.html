@@ -16,10 +16,15 @@
 				// Parse as JSON
 				const response = JSON.parse(client.responseText)
 
-				var summary = "<p>" + new Date() + " - "
+				var summary = "<p>" + response.type + "<br>"
 
-				for (var i in response)
-					summary += response[i] + " "
+				for (var i in response.packets) {
+
+					for (var j in response.packets[i])
+						summary += j + ":" + response.packets[i][j] + " "
+				
+					summary += "<br>"
+				}
 
 				summary += "</p>"
 

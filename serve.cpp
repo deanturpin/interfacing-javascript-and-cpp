@@ -7,8 +7,7 @@ int main() {
 
 	// HTTP header
 	cout
-		<< "Content-Type: text/plain\n"
-		// << "Content-Length: " << to_string(message.size() + 1) + "\n"
+		<< "Content-Type: application/json; charset=utf-8\n"
 		<< "Connection: Closed\n"
 		<< "\n";
 
@@ -30,7 +29,7 @@ int main() {
 			message << ",";
 	}
 
-	message << R"(]})";
+	message << "]}";
 
 	// The good stuff
 	cout << message.str() << endl;

@@ -21,15 +21,17 @@
 		const context = canvas.getContext("2d")
 
 		// Set canvas size
-		const width = canvas.width = window.innerWidth * .98
-		const height = canvas.height = window.innerHeight * .97
+		const width = canvas.width = window.innerWidth * .97
+		const height = canvas.height = window.innerHeight * .91
+
+		context.strokeStyle = "#2f5"
 
 		// Circle wrapper
-		function circle(x, y, r) {
+		function circle(x, y) {
 
 			// Draw the circle
 			context.beginPath()
-			context.arc( x, y, r, 0, 2 * Math.PI, false)
+			context.arc( x, y, 3, 0, 2 * Math.PI, false)
 			context.stroke()
 		}
 
@@ -48,7 +50,6 @@
 		var displayList = []
 		function render() {
 
-			context.fillStyle = "#fff"
 			context.clearRect(0, 0, canvas.width, canvas.height)
 
 			// Process display list
@@ -57,7 +58,7 @@
 				var polar = cartesianToPolar(displayList[i][0], displayList[i][1])
 
 				// Draw current plot
-				circle(polar.X, polar.Y, displayList[i][2])
+				circle(polar.X, polar.Y)
 			}
 		}
 
@@ -74,11 +75,11 @@
 				// Parse as JSON
 				const json = JSON.parse(client.responseText)
 
-				// Create a bright plot
+				// Create plots
 				for (var i = 0; i < json.packets.length; ++i)
 					displayList.push([
 							json.packets[i].one * Math.random() * width,
-							json.packets[i].two * (.4 + .2 * Math.random()) * height, 5])
+							json.packets[i].two * (.4 + .2 * Math.random()) * height])
 
 				status.innerText = "Packets " + json.packets.length
 				requestAnimationFrame(render)

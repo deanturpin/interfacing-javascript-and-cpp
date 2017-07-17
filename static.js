@@ -15,14 +15,16 @@ onload = function() {
 	const width = canvas.width = window.innerWidth * .97
 	const height = canvas.height = window.innerHeight * .91
 
-	context.strokeStyle = "#2f5"
+	const status = document.getElementById("status")
+
+	context.strokeStyle = "#f4a"
 
 	// Circle wrapper
 	function circle(x, y) {
 
 		// Draw the circle
 		context.beginPath()
-		context.arc( x, y, 3, 0, 2 * Math.PI, false)
+		context.arc(x, y, 3, 0, 2 * Math.PI, false)
 		context.stroke()
 	}
 
@@ -30,7 +32,6 @@ onload = function() {
 	function cartesianToPolar(x, y) {
 
 		const radius = height/6
-
 		const _x = (radius + 400 * y/height) * Math.sin(2 * Math.PI * x/width) + width/2
 		const _y = (radius + 400 * y/height) * Math.cos(2 * Math.PI * x/width) + height/2
 
@@ -55,7 +56,6 @@ onload = function() {
 
 	// Create a new AJAX request
 	var client = new XMLHttpRequest()
-	const status = document.getElementById("status")
 
 	// Set up handler for AJAX response
 	client.onreadystatechange = function() {
@@ -64,16 +64,17 @@ onload = function() {
 		if (this.readyState === 4 && this.status === 200) {
 
 			// Parse as JSON
-			const json = JSON.parse(client.responseText)
+			const packets = JSON.parse(client.responseText)
 
 			// Create plots
-			for (var i = 0; i < json.packets.length; ++i)
+			for (var i in packets.packets)
 				displayList.push([
-						json.packets[i].one * Math.random() * width,
-						json.packets[i].two * (.4 + .2 * Math.random()) * height])
+						packets.packets[i].one * Math.random() * width,
+						packets.packets[i].two * (.4 + .2 * Math.random()) * height])
 
-			status.innerText = "Packets " + json.packets.length
 			requestAnimationFrame(render)
+
+			status.innerHTML += packets.packets.length + " packets<br>"
 		}
 	}
 

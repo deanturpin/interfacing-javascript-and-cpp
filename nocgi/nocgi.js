@@ -80,7 +80,7 @@ onload = function() {
 			status.innerHTML += "server responded with a " + server.status;
 	}
 
-	const file = "packets.json";
+	const file = "packet.json";
 	status.innerHTML += "Loading " + file + "<br>"
 
 	client.open("GET", file, true)

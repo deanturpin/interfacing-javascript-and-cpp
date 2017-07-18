@@ -2,7 +2,7 @@
 
 console.log('{"type":"alpha","packets": [');
 
-const maxPackets = 10;
+const maxPackets = 10000;
 
 for (var i = 0; i < maxPackets; ++i) {
 

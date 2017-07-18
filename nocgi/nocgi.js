@@ -17,7 +17,7 @@ onload = function() {
 
 	const status = document.getElementById("status")
 
-	context.strokeStyle = "#f00"
+	context.fillStyle = "#f08"
 
 	// Circle wrapper
 	function circle(x, y) {
@@ -25,7 +25,7 @@ onload = function() {
 		// Draw the circle
 		context.beginPath()
 		context.arc(x, y, 3, 0, 2 * Math.PI, false)
-		context.stroke()
+		context.fill()
 	}
 
 	// Cartesian to polar conversion
@@ -78,6 +78,9 @@ onload = function() {
 		}
 	}
 
-	client.open("GET", "packets.json", true)
+	const file = "packets.json";
+	status.innerHTML += "Loading " + file + "<br>"
+
+	client.open("GET", file, true)
 	client.send()
 }

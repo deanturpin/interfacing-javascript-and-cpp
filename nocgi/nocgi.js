@@ -77,7 +77,7 @@ onload = function() {
 			status.innerHTML += packets.packets.length + " packets<br>"
 		}
 		else
-			status.innerHTML += "server responded with a " + server.status;
+			status.innerHTML += "server responded with a " + this.status;
 	}
 
 	const file = "packet.json";

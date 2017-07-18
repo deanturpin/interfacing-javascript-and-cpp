@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<style> body { background-color: grey; } </style>
+
+<p id="status" style="float: right; font-family: sans-serif"></p>
+<script src="index.js"></script>
+
+<script>
+	setInterval(function() {
+			if (window.location.href.split("?").pop() === "reload")
+						window.location.reload()
+	}, 4000)
+</script>

@@ -2,9 +2,33 @@
 
 <style> body { background-color: grey; } </style>
 
-<p id="status" style="float: right; font-family: sans-serif; color: white;"></p>
-<script src="nocgi.js"></script>
+<div style="position: absolute; top: 0; left: 0; font-family: sans-serif; color: white;">
+	<p id="status"></p>
+	<input type="file" id="files" name="files[]" />
+</div>
 
+<script>
+function handleFileSelect(evt) {
+
+	var reader = new FileReader();
+
+	// Set up handler for the read
+	reader.onload = function(e) {
+		console.log(e.target.result);
+		render()
+	};
+
+	reader.readAsText(evt.target.files[0]);
+
+	console.log("file", reader);
+}
+
+
+document.getElementById('files').addEventListener('change', handleFileSelect,
+		false);
+</script>
+
+<script src="nocgi.js"></script>
 <script>
 	setInterval(function() {
 			if (window.location.href.split("?").pop() === "reload")

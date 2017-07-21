@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<input type="file" id="files" />
+
+<p id="results">
+</p>
+
+<script>
+
+document.getElementById('files').onchange = function(e) {
+
+	var reader = new FileReader();
+
+	reader.readAsArrayBuffer(e.target.files[0]);
+
+	function swap32(val) {
+		return ((val & 0xFF) << 24)
+			| ((val & 0xFF00) << 8)
+			| ((val >> 8) & 0xFF00)
+			| ((val >> 24) & 0xFF);
+	}
+
+	// Set up handler for the read
+	reader.onload = function(e) {
+
+		const arr = e.target.result;
+
+		const view = new Int32Array(arr);
+
+		const results = document.getElementById("results");
+
+		results.innerText = "";
+		for (var i in view)
+			results.innerText += swap32(view[i]) + "\n";
+	};
+}
+
+</script>

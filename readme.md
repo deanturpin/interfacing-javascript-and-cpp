@@ -15,6 +15,11 @@ Test it
 curl http://0.0.0.0:8000/cgi-bin/serve.cgi
 ```
 
+Binary files generated with xxd
+```
+xxd -r -p <<< "0100000002000000" > binary/blah-le.bin
+```
+
 Or in the browser: http://0.0.0.0:8000/get.html
 
 # USP

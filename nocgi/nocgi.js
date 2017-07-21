@@ -78,6 +78,14 @@ onload = function() {
 		}
 	}
 
+	var mousePosition = 0;
+	document.onmousewheel = function(e) {
+
+		mousePosition += e.wheelDelta;
+
+		console.log("zoom", mousePosition);
+	}
+
 	const file = "packets.json";
 	status.innerHTML += "Loading " + file + "<br>"
 

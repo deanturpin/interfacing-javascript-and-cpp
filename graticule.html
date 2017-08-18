@@ -1,0 +1,98 @@
+<script>
+"use strict";
+
+onload = function(){
+
+  // Create a canvas element and add it to the DOM
+  const canvas = document.createElement("canvas");
+  document.body.appendChild(canvas);
+  const context = canvas.getContext("2d");
+
+  // Make the canvas fill the screen
+  const width = canvas.width = window.innerWidth;
+  const height = canvas.height = window.innerHeight;
+
+  var zoom = 0;
+
+  // canvas.addEventListener('DOMMouseScroll', mouseWheelEvent);
+  canvas.addEventListener('mousewheel', mouseWheelEvent);
+  function mouseWheelEvent(e) {
+
+    //const r = canvas.getBoundingClientRect();
+    const x = e.clientX;// - r.left;
+    const y = e.clientY;// - r.top;
+
+    const newZoom = zoom + e.wheelDelta;
+
+    if (newZoom <= 0) {
+      zoom = newZoom;
+      x1 += e.detail * 40;
+      y1 += e.detail * 40;
+      // x2 += e.detail * 40;
+      // y2 += e.detail * 40;
+    }
+
+    console.log(x, y, zoom, x1, y1, e.detail, e.wheelDelta);
+
+    clearScreen();
+    drawGraticule();
+    return false;
+  }
+
+  // Viewport settings
+  const xMin = 0; var x1 = xMin;
+  const xMax = 0xfff; var x2 = xMax;
+  const yMin = 0; var y1 = yMin;
+  const yMax = 0xffffff; var y2 = yMax;
+
+  function drawGraticule() {
+
+    context.fillStyle = "white";
+    // context.strokeStyle = "white";
+
+    let increment = (x2 - x1) / 20;
+    for (let i = x1; i < x2; i += increment) {
+
+      const pos = i * width / x2;
+
+      context.beginPath();
+      context.moveTo(pos, 0);
+      context.lineTo(pos, height);
+      context.lineWidth = .25;
+      context.stroke();
+
+      context.fillText(i, pos, height - 20);
+    }
+
+    increment = (y2 - y1) / 20;
+    for (let i = y1; i < y2; i += increment) {
+
+      const pos = i * height / y2;
+
+      context.beginPath();
+      context.moveTo(0, pos);
+      context.lineTo(width, pos);
+      context.lineWidth = .25;
+      context.stroke();
+
+      context.fillText(i, 0, height - i * height / y2);
+    }
+  }
+  drawGraticule();
+
+  function clearScreen() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  }
+}
+</script>
+
+<style>
+body { overflow: hidden; background-color: #626062; color: white; font-family:
+sans-serif; font-size: 60%; }
+
+div#nav {
+
+  background-color: #3F6289; border: solid 1px #aaa; border-radius: 0px 10px;
+position: fixed; top: 0; right: 0; padding: 10px; margin: 10px;
+}
+</style>
